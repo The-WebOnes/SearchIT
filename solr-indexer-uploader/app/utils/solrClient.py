@@ -18,9 +18,9 @@ class clientSorl:
 
         pdfextractor = pdfDataExtractor()
 
-        tokenize = tokenizer()
         content = pdfextractor.get_text_content(Path_File)
 
+        tokenize = tokenizer()
         tokenz = tokenize.get_tokenz(content)
    
         title = title_file

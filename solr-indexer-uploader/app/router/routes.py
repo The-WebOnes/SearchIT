@@ -1,8 +1,11 @@
 from fastapi import APIRouter, UploadFile, File
 from fastapi.responses import FileResponse, JSONResponse
-from os import getcwd
+from os import getcwd, remove
 from utils.solrClient import clientSorl
-
+from fastapi.exceptions import HTTPException
+from langdetect import detect
+import pdfplumber
+import io
 
 router = APIRouter()
 
@@ -11,15 +14,25 @@ Path_File = getcwd() + "/"
 
 @router.post('/upload')
 async def upload_document(file: UploadFile = File(...)):
-    with open(Path_File + file.filename, "wb") as myfile:
+    try:
         content = await file.read()
-        myfile.write(content)
-        myfile.close()
+        buffer = io.BytesIO(content)
 
-    client = clientSorl()
-    client.submit_document(Path_File + file.filename, file.filename)
+        with pdfplumber.open(buffer) as pdf:
+            if detect(pdf.pages[0].extract_text()) != "es":
+                print("Unsupported language for document")
+                raise Exception("Unsupported language for document")
 
-    return JSONResponse(content={"message": "success"}, status_code=200)
+        with open(Path_File + file.filename, "wb") as myfile:
+            myfile.write(content)
+            myfile.close()
+
+        client = clientSorl()
+        client.submit_document(Path_File + file.filename, file.filename)
+
+        return JSONResponse(content={"message": "success"}, status_code=200)
+    except BaseException as ex:
+        raise HTTPException(400, detail=str(ex))
 
 
 @router.get('/file/{name_document}')
