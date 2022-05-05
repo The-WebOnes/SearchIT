@@ -2,3 +2,4 @@ GB,gib,gigabyte,gigabytes
 MB,mib,megabyte,megabytes
 Television, Televisions, TV, TVs
 examen,prueba,experimento,conato,disposicion,pase,tentativa,vuelta,ensayo,test,audicion,demostracion,comprobacion,informe,experimentacion,evidencia,hecho,quiz,campeonato,certamen,competicion,concurso,contienda
+PALACIO,CASTILLO
