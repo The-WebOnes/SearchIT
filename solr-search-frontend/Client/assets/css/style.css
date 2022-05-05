@@ -411,7 +411,7 @@ h6 {
   cursor: pointer;
 }
 
-.header .autocomplete-items {
+.header .autocomplete-items{
   margin-left: -80%;
   cursor: pointer;
 }
@@ -603,9 +603,7 @@ h6 {
   height: 50%;
 }
 
-.dashboard .dropzone #upload-alert,
-#upload-alert-success,
-#search-alert {
+.dashboard .dropzone #upload-alert, #upload-alert-success, #search-alert {
   display: none;
 }
 
