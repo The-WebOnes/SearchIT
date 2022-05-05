@@ -38,11 +38,11 @@ def test_download_eng():
 FACADE_BASE_URL = "http://localhost:8093"
 QUERY = "test"
 def test_query():
-    response = requests.get(f"{FACADE_BASE_URL}/query?q={QUERY}")
+    response = requests.get(f"{FACADE_BASE_URL}/query?query={QUERY}")
     assert response.status_code == 200
 
 def test_suggest():
-    response = requests.get(f"{FACADE_BASE_URL}/suggest?q={QUERY}")
+    response = requests.get(f"{FACADE_BASE_URL}/suggest?query={QUERY}")
     assert response.status_code == 200
 #endregion 
 
@@ -52,7 +52,7 @@ SYNONYM_LIST = ["PALACIO", "CASTILLO"]
 
 def test_update_synonym():
     response = requests.post(f"{UPDATER_BASE_URL}/update", data = json.dumps(SYNONYM_LIST))
-    assert response.status_code == 200
+    assert response.status_code == 201
 
 #endregion 
 
@@ -70,7 +70,7 @@ def test_eng_synonym():
     response = requests.get(f"{SYNONYM_BASE_URL}/eng?word={WORD_ENG}")
     assert response.status_code == 200
     assert len(response.json()) > 0
-    
+
 #endregion
 if __name__ ==  "__main__":
     test_upload_spa()
