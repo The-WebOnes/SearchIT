@@ -46,7 +46,7 @@ def test_suggest():
     assert response.status_code == 200
 #endregion 
 
-#region updater
+#region synonym updater
 UPDATER_BASE_URL = "http://localhost:8092"
 SYNONYM_LIST = ["PALACIO", "CASTILLO"]
 
@@ -55,5 +55,22 @@ def test_update_synonym():
     assert response.status_code == 200
 
 #endregion 
+
+#region synonym api
+SYNONYM_BASE_URL = "http://localhost:8091"
+WORD_SPA = "palacio"
+WORD_ENG = "castle"
+
+def test_spa_synonym():
+    response = requests.get(f"{SYNONYM_BASE_URL}/spa?word={WORD_SPA}")
+    assert response.status_code == 200
+    assert len(response.json()) > 0
+
+def test_eng_synonym():
+    response = requests.get(f"{SYNONYM_BASE_URL}/eng?word={WORD_ENG}")
+    assert response.status_code == 200
+    assert len(response.json()) > 0
+    
+#endregion
 if __name__ ==  "__main__":
     test_upload_spa()
